@@ -30,8 +30,10 @@
         @if (auth()->check())
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    {!! Form::open(['method' => 'POST', 'action' => array('PostController@store', $task->id)]) !!}
-
+                    {{--{!! Form::open(['method' => 'POST', 'route' => array('PostController@store', $task->id)]) !!}--}}
+                    {{--{!! Form::open(['method' => 'POST', 'route' => $task->path().'/posts']) !!}--}}
+                    <form method="POST" action="{{ $task->path() . '/posts' }}">
+                    {{ csrf_field() }}
                         {!! Field::textarea('comments', ['label' => 'Comentario', 'rows' => '3', 'placeholder' => 'Escriba su comentario']) !!}
 
                         {!! Form::submit('Guardar', ['class'=> 'btn btn-primary form-control']) !!}

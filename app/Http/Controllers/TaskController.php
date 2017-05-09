@@ -39,12 +39,18 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param $channelId
+     * @param
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'channel_id' => 'required|exists:channels,id'
+        ]);
+
         $task = Task::create([
             'user_id'        => auth()->id(),
             'channel_id'     => request('channel_id'),

@@ -17,11 +17,16 @@ class PostController extends Controller
     }
 
     /**
+     * @param $channelId
      * @param Task $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Task $task)
+    public function store($channelId, Task $task)
     {
+        $this->validate(request(), [
+            'comments' => 'required'
+        ]);
+
         $task->addComment([
             'comments'  => request('comments'),
             'user_id'   => auth()->id()

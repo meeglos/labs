@@ -26,12 +26,47 @@ class CreateTaskTest extends TestCase
     {
         $this->signIn();
 
-        $task = create('App\Task');
+        $task = make('App\Task');
 
-        $this->post('/tasks', $task->toArray());
+        $response = $this->post('/tasks', $task->toArray());
 
-        $this->get($task->path())
+        $this->get($response->headers->get('Location'))
             ->assertSee($task->description)
             ->assertSee($task->client_name);
+    }
+
+    /** @test */
+    function a_task_requires_a_title()
+    {
+        $this->publishTask(['title' => null])
+            ->assertSessionHasErrors('title');
+    }
+
+   /** @test */
+    function a_task_requires_a_body()
+    {
+        $this->publishTask(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
+
+   /** @test */
+    function a_task_requires_a_valid_channel()
+    {
+        factory('App\Channel', 2)->create();
+
+        $this->publishTask(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->publishTask(['channel_id' => 999])
+            ->assertSessionHasErrors('channel_id');
+    }
+
+    public function publishTask($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $task = make('App\Task', $overrides);
+
+        return $this->post('/tasks', $task->toArray());
     }
 }

@@ -25,11 +25,23 @@ class ParticipateInLabsTest extends TestCase
 
         $task = create('App\Task');
         $post = make('App\Post');
-dd($post);
+
         $this->post($task->path() .'/posts', $post->toArray());
 
         $this->get($task->path())
             ->assertSee($post->comments);
+
+    }
+    /** @test */
+    public function a_post_requires_a_comment()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $task = create('App\Task');
+        $post = make('App\Post', ['comments' => null]);
+
+        $this->post($task->path() .'/posts', $post->toArray())
+            ->assertSessionHasErrors('comments');
 
     }
 }
