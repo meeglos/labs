@@ -42,8 +42,6 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $channels = Channel::pluck('name', 'id')->toArray();
-
         return view('tasks.create', compact('channels'));
     }
 
