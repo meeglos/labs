@@ -57,7 +57,10 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'agent_code' => 'required',
+            'client_code' => 'required',
             'client_name' => 'required',
+            'client_phone' => 'required',
             'description' => 'required',
             'channel_id' => 'required|exists:channels,id'
         ]);
