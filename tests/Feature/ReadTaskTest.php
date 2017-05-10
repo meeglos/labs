@@ -38,4 +38,16 @@ class ReadTaskTest extends TestCase
         $this->get($this->task->path())
             ->assertSee($post->comments);
     }
+
+    /** @test */
+    public function a_user_can_filter_tasks_according_to_a_channel()
+    {
+        $channel = create('App\Channel');
+        $taskInChannel = create('App\Task', ['channel_id' => $channel->id]);
+        $taskNotInChannel =  create('App\Task');
+
+        $this->get('/tasks/' . $channel->slug)
+            ->assertSee($taskInChannel->description)
+            ->assertDontSee($taskNotInChannel->description);
+    }
 }

@@ -36,17 +36,17 @@ class CreateTaskTest extends TestCase
     }
 
     /** @test */
-    function a_task_requires_a_title()
+    function a_task_requires_a_description()
     {
-        $this->publishTask(['title' => null])
-            ->assertSessionHasErrors('title');
+        $this->publishTask(['description' => null])
+            ->assertSessionHasErrors('description');
     }
 
    /** @test */
-    function a_task_requires_a_body()
+    function a_task_requires_a_client_name()
     {
-        $this->publishTask(['body' => null])
-            ->assertSessionHasErrors('body');
+        $this->publishTask(['client_name' => null])
+            ->assertSessionHasErrors('client_name');
     }
 
    /** @test */

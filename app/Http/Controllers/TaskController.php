@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\Task;
 use Illuminate\Http\Request;
 
@@ -18,11 +19,19 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param null $channelSlug
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($channelSlug = null)
     {
-        $tasks = Task::latest()->get();
+        if ($channelSlug) {
+            $channelId = Channel::where('slug', $channelSlug)->first()->id;
+
+            $tasks = Task::where('channel_id', $channelId)->latest()->get();
+        } else {
+            $tasks = Task::latest()->get();
+        }
+
         return view('tasks.index', compact('tasks'));
     }
 
@@ -33,7 +42,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $channels = Channel::pluck('name', 'id')->toArray();
+
+        return view('tasks.create', compact('channels'));
     }
 
     /**
@@ -46,8 +57,8 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+            'client_name' => 'required',
+            'description' => 'required',
             'channel_id' => 'required|exists:channels,id'
         ]);
 
