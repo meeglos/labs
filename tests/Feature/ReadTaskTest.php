@@ -50,4 +50,17 @@ class ReadTaskTest extends TestCase
             ->assertSee($taskInChannel->description)
             ->assertDontSee($taskNotInChannel->description);
     }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_any_username()
+    {
+        $this->signIn(create('App\User', ['name' => 'JohnDoe']));
+
+        $taskByJohnDoe = create('App\Task', ['user_id' => auth()->id()]);
+        $taskNotByJohnDoe = create('App\Task');
+
+        $this->get('tasks?by=JohnDoe')
+            ->assertSee($taskByJohnDoe->description)
+            ->assertDontSee($taskNotByJohnDoe->description);
+    }
 }

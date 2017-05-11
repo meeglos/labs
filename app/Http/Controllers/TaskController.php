@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -19,18 +20,24 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param null $channelSlug
+     * @param Channel $channel
      * @return \Illuminate\Http\Response
+     * @internal param null $channelSlug
      */
-    public function index($channelSlug = null)
+    public function index(Channel $channel)
     {
-        if ($channelSlug) {
-            $channelId = Channel::where('slug', $channelSlug)->first()->id;
-
-            $tasks = Task::where('channel_id', $channelId)->latest()->get();
+        if ($channel->exists) {
+            $tasks = $channel->tasks()->latest();
         } else {
-            $tasks = Task::latest()->get();
+            $tasks = Task::latest();
         }
+
+        if ($username = request('by')) {
+            $user = User::where('name', $username)->firstOrFail();
+
+            $tasks->where('user_id', $user->id);
+        }
+        $tasks = $tasks->get();
 
         return view('tasks.index', compact('tasks'));
     }

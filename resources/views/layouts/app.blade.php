@@ -43,7 +43,15 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="/tasks">Tareas</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tareas <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/tasks">Todas las Tareas</a></li>
+                                @if (auth()->check())
+                                    <li><a href="/tasks?by={{ auth()->user()->name }}">Mis Tareas</a></li>
+                                @endif
+                            </ul>
+                        </li>
                         <li><a href="/tasks/create">Crear Tarea</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Canales <span class="caret"></span></a>

@@ -17,7 +17,9 @@ class AppServiceProvider extends ServiceProvider
         \View::composer('tasks.create', function ($view) {
            $view->with('channels', Channel::pluck('name', 'id')->toArray());
         });
-        \View::share('chaannels', Channel::all());
+        \View::composer('*', function ($view) {
+            $view->with('chaannels', Channel::all());
+        });
     }
 
     /**
