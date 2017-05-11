@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Filters\TaskFilters;
 use Illuminate\Database\Eloquent\Model;
 use Styde\Html\Str;
 
@@ -41,5 +42,15 @@ class Task extends Model
     public function addComment($post)
     {
         $this->posts()->create($post);
+    }
+
+    /**
+     * @param $query
+     * @param TaskFilters $filters
+     * @return mixed
+     */
+    public function scopeFilter($query, TaskFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }

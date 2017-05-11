@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Channel;
+use App\Filters\TaskFilters;
 use App\Task;
-use App\User;
 use Illuminate\Http\Request;
+
 
 class TaskController extends Controller
 {
@@ -21,23 +22,12 @@ class TaskController extends Controller
      * Display a listing of the resource.
      *
      * @param Channel $channel
+     * @param TaskFilters $filters
      * @return \Illuminate\Http\Response
-     * @internal param null $channelSlug
      */
-    public function index(Channel $channel)
+    public function index(Channel $channel, TaskFilters $filters)
     {
-        if ($channel->exists) {
-            $tasks = $channel->tasks()->latest();
-        } else {
-            $tasks = Task::latest();
-        }
-
-        if ($username = request('by')) {
-            $user = User::where('name', $username)->firstOrFail();
-
-            $tasks->where('user_id', $user->id);
-        }
-        $tasks = $tasks->get();
+        $tasks = $this->getTasks($channel, $filters);
 
         return view('tasks.index', compact('tasks'));
     }
@@ -128,4 +118,22 @@ class TaskController extends Controller
     {
         //
     }
+
+    /**
+     * @param Channel $channel
+     * @param TaskFilters $filters
+     * @return mixed
+     */
+    protected function getTasks(Channel $channel, TaskFilters $filters)
+    {
+        $tasks = Task::latest()->filter($filters);
+
+        if ($channel->exists) {
+            $tasks->where('channel_id', $channel->id);
+        }
+
+        $tasks = $tasks->get();
+        return $tasks;
+    }
+
 }

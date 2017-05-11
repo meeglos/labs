@@ -22,11 +22,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::post('/tasks/create', 'TaskController@create');
-//Route::get('tasks/create', 'TasksController@create');
-//Route::get('tasks/{channel}/{task}', 'TaskController@show');
-//Route::resource('tasks', 'TaskController');
-//Route::post('/tasks/{channel}/{task}/posts', 'PostController@store');
 
 Route::get('tasks', 'TaskController@index');
 Route::get('tasks/create', 'TaskController@create');
