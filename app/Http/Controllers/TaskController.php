@@ -82,7 +82,10 @@ class TaskController extends Controller
      */
     public function show($channelId, Task $task)
     {
-        return view('tasks.show', compact('task'));
+        return view('tasks.show', [
+            'task' => $task,
+            'posts' => $task->posts()->paginate(20)
+        ]);
     }
 
     /**
@@ -126,7 +129,7 @@ class TaskController extends Controller
      */
     protected function getTasks(Channel $channel, TaskFilters $filters)
     {
-        $tasks = Task::latest()->filter($filters);
+        $tasks = Task::with('channel')->latest()->filter($filters);
 
         if ($channel->exists) {
             $tasks->where('channel_id', $channel->id);

@@ -10,7 +10,7 @@
                     <div class="panel-body">
                         @foreach ($tasks as $task)
                             <article>
-                                <span class="label label-danger pull-right" style="margin-left: 1em;">{{ $task->posts_count }} {{ str_plural('comentario', $task->posts_count) }}</span>
+                                <span class="label label-info pull-right" style="padding: 5px 10px; margin-left: 1em;">{{ $task->posts_count }} {{ str_plural('comentario', $task->posts_count) }}</span>
                                 <h4>
                                     <a href="{{ $task->path() }}">
                                         {{ $task->description }}

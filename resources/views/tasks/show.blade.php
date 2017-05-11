@@ -6,8 +6,8 @@
             <div class="col-md-8">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        <a href="#">{{ $task->creator->name }}</a> posted:
-                        {{ $task->description }}
+                        <h4><a href="#">{{ $task->creator->name }}</a> posted:
+                        {{ $task->description }}</h4>
                     </div>
 
                     <div class="panel-body">
@@ -17,10 +17,11 @@
                     </div>
                 </div>
 
-                @foreach ($task->posts as $post)
+                @foreach ($posts as $post)
                     @include ('tasks.reply')
                 @endforeach
 
+                {{ $posts->links() }}
 
                 @if (auth()->check())
 
