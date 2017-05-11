@@ -8,16 +8,16 @@ use Styde\Html\Str;
 
 class Task extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'channel_id',
-        'agent_code',
-        'client_code',
-        'client_name',
-        'client_phone',
-        'slug',
-        'description',
-    ];
+    protected $guarded = [];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('postCount', function ($builder) {
+              $builder->withCount('posts');
+        });
+    }
 
     public function path()
     {
