@@ -63,4 +63,20 @@ class ReadTaskTest extends TestCase
             ->assertSee($taskByJohnDoe->description)
             ->assertDontSee($taskNotByJohnDoe->description);
     }
+
+    /** @test */
+    function a_user_can_filter_tasks_by_popularity()
+    {
+        $taskWithTwoPosts = create('App\Task');
+        create('App\Post', ['task_id' => $taskWithTwoPosts->id], 2);
+
+        $taskWithTwoPosts = create('App\Task');
+        create('App\Post', ['task_id' => $taskWithTwoPosts->id], 3);
+
+        $taskWithNoPosts = $this->task;
+
+        $response = $this->getJson('tasks?popular=1')->json();
+
+        $this->assertEquals([3, 2, 0], array_column($response, 'posts_count'));
+    }
 }

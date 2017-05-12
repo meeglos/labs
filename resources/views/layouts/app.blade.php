@@ -50,6 +50,7 @@
                                 @if (auth()->check())
                                     <li><a href="/tasks?by={{ auth()->user()->name }}">Mis Tareas</a></li>
                                 @endif
+                                <li><a href="/tasks?popular=1">Mas Comentados</a></li>
                             </ul>
                         </li>
                         <li><a href="/tasks/create">Crear Tarea</a></li>

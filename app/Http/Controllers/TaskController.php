@@ -29,6 +29,9 @@ class TaskController extends Controller
     {
         $tasks = $this->getTasks($channel, $filters);
 
+        if (request()->wantsJson()) {
+            return $tasks;
+        }
         return view('tasks.index', compact('tasks'));
     }
 
@@ -134,7 +137,7 @@ class TaskController extends Controller
         if ($channel->exists) {
             $tasks->where('channel_id', $channel->id);
         }
-
+//dd($tasks->toSql());
         $tasks = $tasks->get();
         return $tasks;
     }
