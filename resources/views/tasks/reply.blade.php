@@ -6,9 +6,9 @@
             </a> said {{ $post->created_at->diffForHumans() }}
         {{--</h5>--}}
         <span class="pull-right">
-            {!! Form::open() !!}
+            {!! Form::open(['method' => 'POST', 'action' => array('FavoritesController@store', $post->id)]) !!}  {{-- /posts/{{  $post->id }}/favorites --}}
 
-            {!! Form::submit('Favorito', ['class'=> 'btn btn-default btn-xs']) !!}
+            {!! Form::submit($post->favorites()->count() . ' ' . str_plural('favorito', $post->favorites()->count()), ['class'=> 'btn btn-default btn-xs', $post->isFavorited() ? 'disabled' : 'none']) !!}
 
             {!! Form::close() !!}
         </span>
