@@ -31,5 +31,18 @@ class FavoritesTest extends TestCase
     }
 
     /** @test */
-    function
+    function an_authenticated_user_may_only_favorite_a_post_once()
+    {
+        $this->signIn();
+
+        $post = create('App\Post');
+
+        try {
+            $this->post('posts/' . $post->id . '/favorites');
+            $this->post('posts/' . $post->id . '/favorites');
+        } catch (\Exception $e) {
+            $this->fail('You already have favorited this item.');
+        }
+        $this->assertCount(1, $post->favorites);
+    }
 }

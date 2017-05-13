@@ -13,11 +13,8 @@ class FavoritesController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * @param Post $post
-     */
     public function store(Post $post)
     {
-        $post->favorite();
+        return $post->favorite();
     }
 }
