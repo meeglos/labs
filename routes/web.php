@@ -30,4 +30,6 @@ Route::post('tasks', 'TaskController@store');
 Route::get('tasks/{channel}', 'TaskController@index');
 Route::post('/tasks/{channel}/{task}/posts', 'PostController@store');
 
+Route::post('/posts/{post}/favorites', 'FavoritesController@store');
+
 
