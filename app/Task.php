@@ -10,7 +10,7 @@ class Task extends Model
 {
     protected $guarded = [];
 
-    protected $with = ['creator'];
+    protected $with = ['creator', 'channel'];
 
     protected static function boot()
     {

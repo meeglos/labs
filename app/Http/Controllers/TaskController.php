@@ -132,14 +132,12 @@ class TaskController extends Controller
      */
     protected function getTasks(Channel $channel, TaskFilters $filters)
     {
-        $tasks = Task::with('channel')->latest()->filter($filters);
+        $tasks = Task::latest()->filter($filters);
 
         if ($channel->exists) {
             $tasks->where('channel_id', $channel->id);
         }
-//dd($tasks->toSql());
-        $tasks = $tasks->get();
-        return $tasks;
+        return $tasks->get();
     }
 
 }
