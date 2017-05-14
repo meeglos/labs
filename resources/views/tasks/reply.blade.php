@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         {{--<h5 class="flex">--}}
-            <a href="#">
+            <a href="{{ route('profile', $task->creator) }}">
                 {{ $post->owner->name }}
             </a> said {{ $post->created_at->diffForHumans() }}
         {{--</h5>--}}

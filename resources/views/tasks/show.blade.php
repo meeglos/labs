@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        <h4><a href="#">{{ $task->creator->name }}</a> posted:
+                        <h4><a href="{{ route('profile', $task->creator) }}">{{ $task->creator->name }}</a> posted:
                         {{ $task->description }}</h4>
                     </div>
 

@@ -32,4 +32,6 @@ Route::post('/tasks/{channel}/{task}/posts', 'PostController@store');
 
 Route::post('/posts/{post}/favorites', 'FavoritesController@store');
 
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
+
 
