@@ -10,6 +10,8 @@ class Task extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['creator'];
+
     protected static function boot()
     {
         parent::boot();
@@ -26,7 +28,9 @@ class Task extends Model
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)
+            ->withCount('favorites')
+            ->with('owner');
     }
 
     public function creator()

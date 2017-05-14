@@ -8,7 +8,7 @@
         <span class="pull-right">
             {!! Form::open(['method' => 'POST', 'action' => array('FavoritesController@store', $post->id)]) !!}  {{-- /posts/{{  $post->id }}/favorites --}}
 
-            {!! Form::submit($post->favorites()->count() . ' ' . str_plural('favorito', $post->favorites()->count()), ['class'=> 'btn btn-default btn-xs', $post->isFavorited() ? 'disabled' : 'none']) !!}
+            {!! Form::submit($post->favorites_count . ' ' . str_plural('favorito', $post->favorites_count), ['class'=> 'btn btn-default btn-xs', $post->isFavorited() ? 'disabled' : 'none']) !!}
 
             {!! Form::close() !!}
         </span>

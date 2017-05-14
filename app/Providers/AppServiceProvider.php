@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Channel;
+use Cache;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,10 +16,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \View::composer('tasks.create', function ($view) {
-           $view->with('channels', Channel::pluck('name', 'id')->toArray());
+            $view->with('channels', Channel::pluck('name', 'id')->toArray());
         });
+
         \View::composer('*', function ($view) {
-            $view->with('chaannels', Channel::all());
+            $chaannels = Cache::rememberForever('chaannels', function () {
+                return Channel::all();
+            });
+
+            $view->with('chaannels',$chaannels);
         });
     }
 
