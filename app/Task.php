@@ -5,9 +5,12 @@ namespace App;
 use App\Filters\TaskFilters;
 use Illuminate\Database\Eloquent\Model;
 use Styde\Html\Str;
+use Tests\Unit\ActivityTest;
 
 class Task extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = [];
 
     protected $with = ['creator', 'channel'];
@@ -61,4 +64,6 @@ class Task extends Model
     {
         return $filters->apply($query);
     }
+
+
 }
