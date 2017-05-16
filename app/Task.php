@@ -19,6 +19,10 @@ class Task extends Model
         static::addGlobalScope('postCount', function ($builder) {
               $builder->withCount('posts');
         });
+
+        static::deleting(function ($task) {
+           $task->posts()->delete();
+        });
     }
 
     public function path()
@@ -28,9 +32,9 @@ class Task extends Model
 
     public function posts()
     {
-        return $this->hasMany(Post::class)
-            ->withCount('favorites')
-            ->with('owner');
+        return $this->hasMany(Post::class);
+//            ->withCount('favorites')
+//            ->with('owner');
     }
 
     public function creator()

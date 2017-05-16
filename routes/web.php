@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('tasks', 'TaskController@index');
 Route::get('tasks/create', 'TaskController@create');
 Route::get('tasks/{channel}/{task}', 'TaskController@show');
+Route::delete('tasks/{channel}/{task}', 'TaskController@destroy');
 Route::post('tasks', 'TaskController@store');
 Route::get('tasks/{channel}', 'TaskController@index');
 Route::post('/tasks/{channel}/{task}/posts', 'PostController@store');

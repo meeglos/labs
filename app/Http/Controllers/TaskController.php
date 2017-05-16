@@ -83,7 +83,7 @@ class TaskController extends Controller
      * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Task $task)
+    public function show($channel, Task $task)
     {
         return view('tasks.show', [
             'task' => $task,
@@ -117,12 +117,17 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Task  $task
+     * @param $channel
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($channel, Task $task)
     {
-        //
+//        $task->posts()->delete();
+
+        $task->delete();
+
+        return response([], 204);
     }
 
     /**

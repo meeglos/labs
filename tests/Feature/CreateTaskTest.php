@@ -61,6 +61,41 @@ class CreateTaskTest extends TestCase
             ->assertSessionHasErrors('channel_id');
     }
 
+    /** @test */
+    function guests_cannot_delete_tasks()
+    {
+        $this->withExceptionHandling();
+
+        $task = create('App\Task');
+
+        $response = $this->delete($task->path());
+
+        $response->assertRedirect('/login');
+    }
+
+    /** @test */
+    function a_task_can_be_deleted()
+    {
+        $this->signIn();
+
+        $task = create('App\Task', ['user_id' => auth()->id()]);
+
+        $post = create('App\Post', ['task_id' => $task->id]);
+
+        $response = $this->json('DELETE', $task->path());
+
+        $response->assertStatus(204);
+
+        $this->assertDatabaseMissing('tasks', ['id'=> $task->id]);
+        $this->assertDatabaseMissing('posts', ['id'=> $post->id]);
+    }
+
+    /** @test */
+    function tasks_may_only_be_deleted_by_those_who_have_permission()
+    {
+//         TODO
+    }
+    
     public function publishTask($overrides = [])
     {
         $this->withExceptionHandling()->signIn();

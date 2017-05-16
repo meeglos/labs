@@ -16,11 +16,11 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('task_id')->unsigned();
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->unsignedInteger('task_id');
+//            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->binary('comments');
 
