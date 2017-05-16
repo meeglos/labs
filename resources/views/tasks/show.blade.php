@@ -6,8 +6,20 @@
             <div class="col-md-8">
                 <div class="panel panel-success">
                     <div class="panel-heading">
-                        <h4><a href="{{ route('profile', $task->creator) }}">{{ $task->creator->name }}</a> posted:
-                        {{ $task->description }}</h4>
+                        @can ('update', $task)
+                            <span class="pull-right" style="margin-left: 1em;">
+                                <form action="{{ $task->path() }}" method="post">
+
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+                                    {{--<input type="submit" class="btn btn-danger btn-sm">Borrar tarea</input>--}}
+                                    {!! Form::submit('Borrar tarea', ['class'=> 'btn btn-danger btn-xs']) !!}
+
+                                </form>
+                            </span>
+                        @endcan
+                        <a href="{{ route('profile', $task->creator) }}">{{ $task->creator->name }}</a>
+                            posted: {{ $task->description }}
                     </div>
 
                     <div class="panel-body">

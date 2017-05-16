@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                @foreach ($tasks as $task)
+                @forelse ($tasks as $task)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <span class="label label-info pull-right">
@@ -20,7 +20,9 @@
                             <div class="body">El nombre del cliente es {{ $task->client_name }} y su teléfono {{ $task->client_phone }}</div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="well well-sm">Aún no se han registrado tareas en esta categoría.</div>
+                @endforelse
             </div>
         </div>
     </div>

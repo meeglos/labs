@@ -62,19 +62,20 @@ class CreateTaskTest extends TestCase
     }
 
     /** @test */
-    function guests_cannot_delete_tasks()
+    function unauthorized_users_may_not_delete_tasks()
     {
         $this->withExceptionHandling();
 
         $task = create('App\Task');
 
-        $response = $this->delete($task->path());
+        $this->delete($task->path())->assertRedirect('/login');
 
-        $response->assertRedirect('/login');
+        $this->signIn();
+        $this->delete($task->path())->assertStatus(403);
     }
 
     /** @test */
-    function a_task_can_be_deleted()
+    function authorized_users_can_delete_threads()
     {
         $this->signIn();
 
@@ -90,12 +91,7 @@ class CreateTaskTest extends TestCase
         $this->assertDatabaseMissing('posts', ['id'=> $post->id]);
     }
 
-    /** @test */
-    function tasks_may_only_be_deleted_by_those_who_have_permission()
-    {
-//         TODO
-    }
-    
+
     public function publishTask($overrides = [])
     {
         $this->withExceptionHandling()->signIn();

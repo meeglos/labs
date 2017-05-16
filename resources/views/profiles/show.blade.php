@@ -15,11 +15,8 @@
                     <span class="label label-info pull-right" style="padding: 5px 10px; margin-left: 1em;">
                         {{ $task->created_at->diffForHumans() }}
                     </span>
-                    <span class="label label-info pull-right" style="padding: 5px 10px; margin-left: 1em;">
-                        {{ $task->created_at->diffForHumans() }}
-                    </span>
-                    <a href="#">{{ $task->creator->name }}</a> posted:
-                    {{ $task->description }}
+                    <a href="{{ route('profile', $task->creator) }}">{{ $task->creator->name }}</a> posted:
+                    <a href="{{ $task->path() }}">{{ $task->description }}</a>
 
                 </div>
                 <div class="panel-body">

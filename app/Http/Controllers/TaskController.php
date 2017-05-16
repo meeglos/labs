@@ -123,11 +123,18 @@ class TaskController extends Controller
      */
     public function destroy($channel, Task $task)
     {
-//        $task->posts()->delete();
+        $this->authorize('update', $task);
 
+        if ($task->user_id != auth()->id()) {
+            abort(403, 'No tiene permisos para borrrar esta tarea');
+        }
         $task->delete();
 
-        return response([], 204);
+        if (\request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/tasks');
     }
 
     /**
