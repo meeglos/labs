@@ -23,13 +23,12 @@ class ProfilesTest extends TestCase
     /** @test */
     function profiles_display_all_tasks_created_by_the_associated_user()
     {
-        $user = create('App\User');
+        $this->signIn();
 
-        $task = create('App\Task', ['user_id' => $user->id]);
+        $task = create('App\Task', ['user_id' => auth()->id()]);
 //dd($task);
-        $this->get("/profiles/{$user->name}")
-            ->assertSee($task->description)
-            ->assertSee($task->client_name);
+        $this->get("/profiles/" . auth()->user()->name)
+            ->assertSee($task->description);
 
     }
 }

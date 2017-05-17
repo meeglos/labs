@@ -10,7 +10,7 @@ class Post extends Model
 
     protected $guarded = [];
 
-    protected $with = ['owner', 'favorites'];
+    protected $with = ['owner', 'favorites', 'task'];
 
     public function owner()
     {
