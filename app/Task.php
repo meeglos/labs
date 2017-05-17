@@ -24,7 +24,7 @@ class Task extends Model
         });
 
         static::deleting(function ($task) {
-           $task->posts()->delete();
+           $task->posts->each->delete();
         });
     }
 

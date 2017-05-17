@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Activity;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -89,6 +90,12 @@ class CreateTaskTest extends TestCase
 
         $this->assertDatabaseMissing('tasks', ['id'=> $task->id]);
         $this->assertDatabaseMissing('posts', ['id'=> $post->id]);
+        /*$this->assertDatabaseMissing('activities', [
+            'subject_id'=> $task->id,
+            'subject_type'=> get_class($task)
+        ]);*/
+
+        $this->assertEquals(0, Activity::count());
     }
 
 
