@@ -32,6 +32,6 @@ class PostController extends Controller
             'user_id'   => auth()->id()
         ]);
 
-        return back();
+        return back()->with('flash', 'Tu comentario ha sido guardado.');
     }
 }

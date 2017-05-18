@@ -73,7 +73,8 @@ class TaskController extends Controller
             'description'    => request('description')
         ]);
 
-        return redirect($task->path());
+        return redirect($task->path())
+            ->with('flash', 'Tu tarea se ha guardado!');
     }
 
     /**
