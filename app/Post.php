@@ -21,4 +21,9 @@ class Post extends Model
     {
         return $this->belongsTo(Task::class);
     }
+
+    public function path()
+    {
+        return $this->task->path() . "#post-{$this->id}";
+    }
 }

@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div id="post-{{ $post->id }}" class="panel panel-default">
     <div class="panel-heading">
         {{--<h5 class="flex">--}}
             <a href="{{ route('profile', $task->creator) }}">

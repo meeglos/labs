@@ -44,4 +44,10 @@ class ParticipateInLabsTest extends TestCase
             ->assertSessionHasErrors('comments');
 
     }
+//
+//    /** @test */
+//    function unauthorized_users_cannot_delete_posts()
+//    {
+//
+//    }
 }
