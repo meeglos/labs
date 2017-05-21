@@ -1,0 +1,9 @@
+.btn-ml-5 {
+    margin-left: 5px;
+}
+.btn-ml-10 {
+    margin-left: 10px;
+}
+[v-cloak] {
+    display: none;
+}

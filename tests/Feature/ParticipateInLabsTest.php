@@ -44,10 +44,59 @@ class ParticipateInLabsTest extends TestCase
             ->assertSessionHasErrors('comments');
 
     }
-//
-//    /** @test */
-//    function unauthorized_users_cannot_delete_posts()
-//    {
-//
-//    }
+
+    /** @test */
+    function unauthorized_users_cannot_delete_posts()
+    {
+        $this->withExceptionHandling();
+
+        $post = create('App\Post');
+
+        $this->delete("/posts/{$post->id}")
+            ->assertRedirect('login');
+
+        $this->signIn()
+            ->delete("/posts/{$post->id}")
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    function authorized_users_can_delete_posts()
+    {
+        $this->signIn();
+        $post = create('App\Post', ['user_id' => auth()->id()]);
+
+        $this->delete("/posts/{$post->id}")->assertStatus(302);
+
+        $this->assertDatabaseMissing('posts', ['id' => $post->id]);
+    }
+
+    /** @test */
+    function unauthorized_users_cannot_update_posts()
+    {
+        $this->withExceptionHandling();
+
+        $post = create('App\Post');
+
+        $this->patch("/posts/{$post->id}")
+            ->assertRedirect('login');
+
+        $this->signIn()
+            ->patch("/posts/{$post->id}")
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    function authorized_users_can_update_posts()
+    {
+        $this->signIn();
+
+        $post = create('App\Post', ['user_id' => auth()->id()]);
+
+        $updatedPost = 'Comentario modificado fool';
+
+        $this->patch("/posts/{$post->id}", ['comments' => $updatedPost]);
+
+        $this->assertDatabaseHas('posts', ['id' => $post->id, 'comments' => $updatedPost]);
+    }
 }
