@@ -31,6 +31,20 @@ class FavoritesTest extends TestCase
     }
 
     /** @test */
+    public function an_authenticated_user_can_unfavorite_any_post()
+    {
+        $this->signIn();
+
+        $post = create('App\Post');
+
+        $post->favorite();
+
+        $this->delete('posts/' . $post->id . '/favorites');
+
+        $this->assertCount(0, $post->favorites);
+    }
+
+    /** @test */
     function an_authenticated_user_may_only_favorite_a_post_once()
     {
         $this->signIn();

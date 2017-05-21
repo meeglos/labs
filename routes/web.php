@@ -34,6 +34,7 @@ Route::patch('/posts/{post}', 'PostController@update');
 Route::delete('/posts/{post}', 'PostController@destroy');
 
 Route::post('/posts/{post}/favorites', 'FavoritesController@store');
+Route::delete('/posts/{post}/favorites', 'FavoritesController@destroy');
 
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 

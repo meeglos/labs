@@ -19,4 +19,9 @@ class FavoritesController extends Controller
 
         return back();
     }
+
+    public function destroy(Post $post)
+    {
+        $post->unfavorite();
+    }
 }

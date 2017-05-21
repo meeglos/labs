@@ -12,6 +12,8 @@ class Post extends Model
 
     protected $with = ['owner', 'favorites', 'task'];
 
+    protected $appends = ['favoritesCount', 'isFavorited'];
+
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
