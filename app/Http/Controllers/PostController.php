@@ -54,6 +54,10 @@ class PostController extends Controller
 
         $post->delete();
 
+        if (request()->expectsJson()) {
+            return response(['status' => 'Comentario eliminado.']);
+        }
+
         return back();
     }
 }

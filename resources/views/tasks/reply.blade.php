@@ -20,15 +20,7 @@
                 </span>
 
                 <span class="pull-right">
-                    {{--{!! Form::open(['method' => 'POST', 'action' => array('FavoritesController@store', $post->id)]) !!}  --}}{{-- /posts/{{  $post->id }}/favorites --}}
-                    <form action="/posts/{{ $post->id }}" method="post">
-
-                    {{ csrf_field() }}
-                    {{ method_field('DELETE') }}
-
-                    {!! Form::submit('Borrar', ['class'=> 'btn btn-danger btn-xs']) !!}
-
-                    {!! Form::close() !!}
+                    <button class="btn btn-danger btn-xs" @click="destroy">Borrar</button>
                 </span>
             @endcan
         </div>

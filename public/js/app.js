@@ -11664,6 +11664,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editing = false;
 
             flash('Comentario actualizado!');
+        },
+        destroy: function destroy() {
+            axios.delete('/posts/' + this.attributes.id);
+
+            $(this.$el).slideUp(300, function () {
+                flash('Great! Tu comentario ha sido eliminado.');
+            });
         }
     }
 });

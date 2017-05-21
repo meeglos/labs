@@ -18,6 +18,14 @@
                 this.editing = false;
 
                 flash('Comentario actualizado!');
+            },
+
+            destroy() {
+                axios.delete('/posts/' + this.attributes.id);
+
+                $(this.$el).slideUp(300, () => {
+                    flash('Great! Tu comentario ha sido eliminado.');
+                });
             }
         }
     }
