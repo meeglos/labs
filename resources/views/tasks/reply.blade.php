@@ -5,9 +5,11 @@
                 {{ $post->owner->name }}
             </a> said {{ $post->created_at->diffForHumans() }}
 
-            <span class="pull-right">
-                <favorite :post="{{ $post }}"></favorite>
-            </span>
+            @if (Auth::check())
+                <span class="pull-right">
+                    <favorite :post="{{ $post }}"></favorite>
+                </span>
+            @endif
 
             @can ('update', $post)
                 <span class="pull-right">

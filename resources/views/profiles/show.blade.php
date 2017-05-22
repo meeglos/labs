@@ -5,11 +5,11 @@
         <div class="page-header">
             <h3>
                 {{ $profileUser->name }}
-                <small> Registrado desde {{ $profileUser->created_at->diffForHumans() }}</small>
+                <small><span class="glyphicon glyphicon-sunglasses"></span> Registrado desde {{ $profileUser->created_at->diffForHumans() }}</small>
             </h3>
         </div>
 
-        @foreach($activities as $date => $activity)
+        @forelse($activities as $date => $activity)
             <h3 class="page-header">{{ $date }}</h3>
 
             @foreach ($activity as $record)
@@ -17,6 +17,8 @@
                     @include ("profiles.activities.{$record->type}", ['activity' => $record])
                 @endif
             @endforeach
-        @endforeach
+        @empty
+            <div class="well well-sm">Este usuario aún no tiene actividad registrada.</div>
+        @endforelse
     </div>
 @endsection
