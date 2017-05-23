@@ -1,16 +1,64 @@
+<template>
+    <div id="'post-'+id" class="panel panel-default">
+        <div class="panel-heading">
+            <a :href="'/profiles/'+attributes.owner.name"
+               v-text="attributes.owner.name">
+            </a> said {{ attributes.created_at }}...
+
+            <span class="pull-right" v-if="signedIn">
+                <favorite :post="attributes"></favorite>
+            </span>
+
+            <span class="pull-right" v-if="canUpdate">
+                <button class="btn btn-warning btn-xs btn-ml-5" @click="editing = true">Editar</button>
+            </span>
+
+            <span class="pull-right" v-if="canUpdate">
+                <button class="btn btn-danger btn-xs" @click="destroy">Borrar</button>
+            </span>
+        </div>
+
+        <div class="panel-body">
+            <div v-if="editing">
+                <div class="form-group">
+                    <textarea v-model="comments" class="form-control" rows="2"></textarea>
+                </div>
+
+                <button class="btn btn-xs btn-info" @click="update">Actualizar</button>
+
+                <button class="btn btn-xs btn-link" @click="editing = false">Cancelar</button>
+            </div>
+
+            <div v-else v-text="comments"></div>
+        </div>
+    </div>
+</template>
+
 <script>
     import Favorite from './Favorite.vue';
 
     export default {
         props: ['attributes'],
 
-        components: { Favorite},
+        components: { Favorite },
 
         data() {
             return {
                 editing: false,
+                id: this.attributes.id,
                 comments: this.attributes.comments
             };
+        },
+
+        computed: {
+            signedIn() {
+                return window.App.signedIn;
+            },
+
+            canUpdate() {
+                return this.authorize(user => this.attributes.user_id == user.id);
+//                return this.attributes.user_id == window.App.user.id;
+            }
         },
 
         methods: {
@@ -27,9 +75,8 @@
             destroy() {
                 axios.delete('/posts/' + this.attributes.id);
 
-                $(this.$el).slideUp(300, () => {
-                    flash('Great! Tu comentario ha sido eliminado.');
-                });
+                this.$emit('deleted', this.attributes.id);
+
             }
         }
     }

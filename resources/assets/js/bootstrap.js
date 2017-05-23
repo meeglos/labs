@@ -22,6 +22,12 @@ try {
 
 window.Vue = require('vue');
 
+Vue.prototype.authorize = function (handler) {
+    // Additional admin privileges here.
+    let user = window.App.user;
+
+    return user ? handler(user) : false;
+};
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -31,7 +37,7 @@ window.Vue = require('vue');
 
 window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
+window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.App.csrfToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 

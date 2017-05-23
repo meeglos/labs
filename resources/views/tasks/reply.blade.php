@@ -11,7 +11,7 @@
                 </span>
             @endif
 
-            @can ('update', $post)
+            {{--@can ('update', $post)--}}
                 <span class="pull-right">
                     <button class="btn btn-warning btn-xs btn-ml-5" @click="editing = true">Editar</button>
                 </span>
@@ -19,7 +19,7 @@
                 <span class="pull-right">
                     <button class="btn btn-danger btn-xs" @click="destroy">Borrar</button>
                 </span>
-            @endcan
+            {{--@endcan--}}
         </div>
         <div class="panel-body">
             <div v-if="editing">
