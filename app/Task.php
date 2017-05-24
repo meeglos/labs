@@ -52,7 +52,7 @@ class Task extends Model
 
     public function addComment($post)
     {
-        $this->posts()->create($post);
+        return $this->posts()->create($post);
     }
 
     /**

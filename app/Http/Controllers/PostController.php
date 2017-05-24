@@ -28,10 +28,14 @@ class PostController extends Controller
             'comments' => 'required'
         ]);
 
-        $task->addComment([
+        $post = $task->addComment([
             'comments'  => request('comments'),
             'user_id'   => auth()->id()
         ]);
+
+        if (request()->expectsJson()) {
+            return $post->load('owner');
+        }
 
         return back()->with('flash', 'Tu comentario ha sido guardado.');
     }

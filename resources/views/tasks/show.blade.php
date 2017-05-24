@@ -30,23 +30,13 @@
                         </div>
                     </div>
 
-                    <posts :data="{{ $task->posts }}" @removed="postsCount--"></posts>
+                    <posts :data="{{ $task->posts }}"
+                        @added="postsCount++"
+                        @removed="postsCount--">
+                    </posts>
 
                     {{--{{ $posts->links() }}--}}
 
-                    @if (auth()->check())
-
-                        <form method="POST" action="{{ $task->path() . '/posts' }}">
-                        {{ csrf_field() }}
-                            {!! Field::textarea('comments', ['label' => 'Comentario', 'rows' => '3', 'placeholder' => 'Escriba su comentario']) !!}
-
-                            {!! Form::submit('Guardar', ['class'=> 'btn btn-primary form-control']) !!}
-
-                        {!! Form::close() !!}
-
-                    @else
-                        <p class="text-center">Por favor <a href="{{ route('login') }}">regístrese</a> para poder comentar.</p>
-                    @endif
                 </div>
                 <div class="col-md-4">
                     <div class="panel panel-default">
