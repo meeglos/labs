@@ -86,10 +86,7 @@ class TaskController extends Controller
      */
     public function show($channel, Task $task)
     {
-        return view('tasks.show', [
-            'task' => $task,
-            'posts' => $task->posts()->paginate(20)
-        ]);
+        return view('tasks.show', compact('task'));
     }
 
     /**

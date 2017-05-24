@@ -14,9 +14,13 @@ class PostController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'index']);
     }
 
+    public function index($channelId, Task $task)
+    {
+        return $task->posts()->paginate(5); // temporary set to 1
+    }
     /**
      * @param $channelId
      * @param Task $task

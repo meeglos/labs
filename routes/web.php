@@ -29,6 +29,7 @@ Route::get('tasks/{channel}/{task}', 'TaskController@show');
 Route::delete('tasks/{channel}/{task}', 'TaskController@destroy')->name('delete');
 Route::post('tasks', 'TaskController@store');
 Route::get('tasks/{channel}', 'TaskController@index');
+Route::get('/tasks/{channel}/{task}/posts', 'PostController@index');
 Route::post('/tasks/{channel}/{task}/posts', 'PostController@store');
 Route::patch('/posts/{post}', 'PostController@update');
 Route::delete('/posts/{post}', 'PostController@destroy');

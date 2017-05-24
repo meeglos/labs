@@ -81,6 +81,8 @@
             destroy() {
                 axios.delete('/posts/' + this.attributes.id);
 
+                flash('Comentario eliminado!');
+
                 this.$emit('deleted', this.attributes.id);
 
             }

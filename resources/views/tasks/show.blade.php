@@ -30,10 +30,7 @@
                         </div>
                     </div>
 
-                    <posts :data="{{ $task->posts }}"
-                        @added="postsCount++"
-                        @removed="postsCount--">
-                    </posts>
+                    <posts @added="postsCount++" @removed="postsCount--"></posts>
 
                 </div>
                 <div class="col-md-4">

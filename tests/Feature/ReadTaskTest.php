@@ -79,4 +79,17 @@ class ReadTaskTest extends TestCase
 
         $this->assertEquals([3, 2, 0], array_column($response, 'posts_count'));
     }
+
+    /** @test */
+    function a_user_can_request_all_posts_for_a_given_task()
+    {
+        $task = create('App\Task');
+
+        create('App\Post', ['task_id' => $task->id], 2);
+
+        $response = $this->getJson($task->path() . '/posts')->json();
+//dd($response);
+        $this->assertCount(1,$response['data']);
+        $this->assertEquals(2,$response['total']);
+    }
 }
