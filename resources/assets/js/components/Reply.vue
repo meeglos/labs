@@ -3,7 +3,7 @@
         <div class="panel-heading">
             <a :href="'/profiles/'+attributes.owner.name"
                v-text="attributes.owner.name">
-            </a> said {{ attributes.created_at }}...
+            </a> comentó <span v-text="ago"></span>
 
             <span class="pull-right" v-if="signedIn">
                 <favorite :post="attributes"></favorite>
@@ -36,6 +36,7 @@
 
 <script>
     import Favorite from './Favorite.vue';
+    import moment from 'moment';
 
     export default {
         props: ['attributes'],
@@ -51,6 +52,11 @@
         },
 
         computed: {
+            ago() {
+                moment.locale('es');
+                return moment(this.attributes.created_at).fromNow() + ' ...';
+            },
+
             signedIn() {
                 return window.App.signedIn;
             },

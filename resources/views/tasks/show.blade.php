@@ -35,8 +35,6 @@
                         @removed="postsCount--">
                     </posts>
 
-                    {{--{{ $posts->links() }}--}}
-
                 </div>
                 <div class="col-md-4">
                     <div class="panel panel-default">
