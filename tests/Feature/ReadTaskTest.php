@@ -35,8 +35,7 @@ class ReadTaskTest extends TestCase
     {
         $post = create('App\Post', ['task_id' => $this->task->id]);
 
-        $this->get($this->task->path())
-            ->assertSee($post->comments);
+        $this->assertDatabaseHas('posts', ['comments' => $post->comments]);
     }
 
     /** @test */
@@ -80,6 +79,17 @@ class ReadTaskTest extends TestCase
         $this->assertEquals([3, 2, 0], array_column($response, 'posts_count'));
     }
 
+    /** @test Created on 26/05/2017 */
+    function a_user_can_filtter_tasks_by_those_that_are_unanswered()
+    {
+        $task = create('App\Task');
+        create('App\Post', ['task_id' => $task->id]);
+
+        $response = $this->getJson('tasks?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
+    }
+
     /** @test */
     function a_user_can_request_all_posts_for_a_given_task()
     {
@@ -89,7 +99,7 @@ class ReadTaskTest extends TestCase
 
         $response = $this->getJson($task->path() . '/posts')->json();
 //dd($response);
-        $this->assertCount(1,$response['data']);
+        $this->assertCount(2,$response['data']);
         $this->assertEquals(2,$response['total']);
     }
 }

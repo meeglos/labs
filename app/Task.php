@@ -18,10 +18,10 @@ class Task extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::addGlobalScope('postCount', function ($builder) {
-              $builder->withCount('posts');
-        });
+/* not used anymore since we added a posts_count field to the table */
+//        static::addGlobalScope('postCount', function ($builder) {
+//              $builder->withCount('posts');
+//        });
 
         static::deleting(function ($task) {
            $task->posts->each->delete();

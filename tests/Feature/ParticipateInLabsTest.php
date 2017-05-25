@@ -28,9 +28,8 @@ class ParticipateInLabsTest extends TestCase
 
         $this->post($task->path() .'/posts', $post->toArray());
 
-        $this->get($task->path())
-            ->assertSee($post->comments);
-
+        $this->assertDatabaseHas('posts', ['comments' => $post->comments]);
+        $this->assertEquals(1, $task->fresh()->posts_count);
     }
     /** @test */
     public function a_post_requires_a_comment()
@@ -69,6 +68,8 @@ class ParticipateInLabsTest extends TestCase
         $this->delete("/posts/{$post->id}")->assertStatus(302);
 
         $this->assertDatabaseMissing('posts', ['id' => $post->id]);
+
+        $this->assertEquals(0, $post->task->fresh()->posts_count);
     }
 
     /** @test */

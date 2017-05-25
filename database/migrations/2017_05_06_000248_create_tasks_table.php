@@ -20,6 +20,7 @@ class CreateTasksTable extends Migration
 //            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedInteger('channel_id');
+            $table->unsignedInteger('posts_count')->default(0);
             $table->string('agent_code');
             $table->string('client_code');
             $table->string('client_name');
