@@ -33,6 +33,8 @@ Route::get('/tasks/{channel}/{task}/posts', 'PostController@index');
 Route::post('/tasks/{channel}/{task}/posts', 'PostController@store');
 Route::patch('/posts/{post}', 'PostController@update');
 Route::delete('/posts/{post}', 'PostController@destroy');
+Route::post('/tasks/{channel}/{task}/subscriptions', 'TaskSubscriptionsController@store')->middleware('auth');
+Route::delete('/tasks/{channel}/{task}/subscriptions', 'TaskSubscriptionsController@destroy')->middleware('auth');
 
 Route::post('/posts/{post}/favorites', 'FavoritesController@store');
 Route::delete('/posts/{post}/favorites', 'FavoritesController@destroy');

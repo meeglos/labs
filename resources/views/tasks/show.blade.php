@@ -41,7 +41,12 @@
                         <div class="panel-body">
                             <p>Esta tarea fue creada {{ $task->created_at->diffForHumans() }}
                                 por <a href="#">{{ $task->creator->name }}</a>
-                                y actualmente tiene <span v-text="postsCount"></span> {{ str_plural('comentario', $task->posts_count) }}.</p>
+                                y actualmente tiene <span v-text="postsCount"></span> {{ str_plural('comentario', $task->posts_count) }}.
+                            </p>
+
+                            <p>
+                                <subscribe-button :active="{{ json_encode($task->isSubscribedTo) }}"></subscribe-button>
+                            </p>
                         </div>
                     </div>
                 </div>

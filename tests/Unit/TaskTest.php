@@ -58,4 +58,45 @@ class TaskTest extends TestCase
 
         $this->assertInstanceOf('App\Channel', $task->channel);
     }
+
+    /** @test Created on 26/05/2017 */
+    function a_task_can_be_suscribed_to()
+    {
+        $task = create('App\Task');
+
+        $this->signIn();
+
+        $task->subscribe();
+
+        $this->assertEquals(
+            1,
+            $task->subscriptions()->where('user_id', auth()->id())->count()
+        );
+    }
+
+    /** @test Created on 26/05/2017 */
+    function a_task_can_be_unsubscribed_from()
+    {
+        $task = create('App\Task');
+
+        $task->subscribe($userId = 1);
+
+        $task->unsubscribe($userId);
+
+        $this->assertCount(0, $task->subscriptions);
+    }
+
+    /** @test Created on 27/05/2017 */
+    function it_knows_if_the_authenticated_user_is_subscribed_to_it()
+    {
+        $task = create('App\Task');
+
+        $this->signIn();
+
+        $this->assertFalse($task->isSubscribedTo);
+
+        $task->subscribe();
+
+        $this->assertTrue($task->isSubscribedTo);
+    }
 }

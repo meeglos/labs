@@ -43,6 +43,7 @@ $factory->define(App\Task::class, function ($faker) {
 
 $factory->define(App\Channel::class, function ($faker) {
     $name = $faker->word;
+//    $name = $faker->randomElement(['Mobile', 'Fixed', 'Email', 'Internet', 'Apps']);
     return [
         'name'  =>  $name,
         'slug'  =>  $name
