@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Filters\TaskFilters;
+use App\Notifications\TaskWasUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Styde\Html\Str;
 use Tests\Unit\ActivityTest;
@@ -20,6 +21,7 @@ class Task extends Model
     protected static function boot()
     {
         parent::boot();
+
 /* not used anymore since we added a posts_count field to the table */
 //        static::addGlobalScope('postCount', function ($builder) {
 //              $builder->withCount('posts');
@@ -54,7 +56,15 @@ class Task extends Model
 
     public function addComment($post)
     {
-        return $this->posts()->create($post);
+        $post = $this->posts()->create($post);
+
+        $this->subscriptions
+            ->filter(function ($sub) use ($post) {
+                return $sub->user_id != $post->user_id;
+            })
+            ->each->notify($post);
+
+        return $post;
     }
 
     /**
@@ -67,11 +77,17 @@ class Task extends Model
         return $filters->apply($query);
     }
 
+    /**
+     * @param int|null $userId
+     * @return $this
+     */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
         ]);
+
+        return $this;
     }
 
     public function unsubscribe($userId = null)

@@ -19,10 +19,7 @@ class SubscribeToTasksTest extends TestCase
 
         $this->post($task->path() . '/subscriptions');
 
-        $task->addComment([
-            'user_id' => auth()->id(),
-            'comments' => 'Some comment here'
-        ]);
+        $this->assertCount(1, $task->fresh()->subscriptions);
     }
 
     /** @test Created on 27/05/2017 */
