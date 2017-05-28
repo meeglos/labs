@@ -58,11 +58,18 @@ class Task extends Model
     {
         $post = $this->posts()->create($post);
 
-        $this->subscriptions
-            ->where('user_id', '!=', $post->user_id)
-            ->each->notify($post);
+        /* this can be treated using an event listener too - check video 46*/
+        $this->notifySubscribers($post);
 
         return $post;
+    }
+
+    public function notifySubscribers($post)
+    {
+        $this->subscriptions
+            ->where('user_id', '!=', $post->user_id)
+            ->each
+            ->notify($post);
     }
 
     /**

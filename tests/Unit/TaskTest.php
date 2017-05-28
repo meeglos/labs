@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Notifications\TaskWasUpdated;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -51,6 +53,21 @@ class TaskTest extends TestCase
         $this->assertCount(1, $this->task->posts);
     }
 
+    /** @test Created on 28/05/2017 */
+    function a_task_notifies_all_registered_subscribers_when_a_post_is_added()
+    {
+        Notification::fake();
+
+        $this->signIn()
+            ->task
+            ->subscribe()
+            ->addComment([
+                'comments'   => 'Foobar',
+                'user_id'   => 999
+            ]);
+
+        Notification::assertSentTo(auth()->user(), TaskWasUpdated::class);
+    }
     /** @test */
     function a_task_belongs_to_a_channel()
     {
