@@ -9,7 +9,6 @@
                 <a :href="notification.data.link"
                    v-text="notification.data.message"
                    @click="markAsRead(notification)">
-
                 </a>
             </li>
         </ul>

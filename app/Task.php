@@ -59,9 +59,7 @@ class Task extends Model
         $post = $this->posts()->create($post);
 
         $this->subscriptions
-            ->filter(function ($sub) use ($post) {
-                return $sub->user_id != $post->user_id;
-            })
+            ->where('user_id', '!=', $post->user_id)
             ->each->notify($post);
 
         return $post;
