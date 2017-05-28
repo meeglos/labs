@@ -22,7 +22,6 @@ class TaskWasUpdated extends Notification
      */
     public function __construct($task, $post)
     {
-        //
         $this->task = $task;
         $this->post = $post;
     }
@@ -41,13 +40,13 @@ class TaskWasUpdated extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray()
     {
         return [
-            'message' => 'Temporary placeholder'
+            'message'   =>  $this->post->owner->name . ' comentó en ' . $this->task->description,
+            'link'      =>  $this->post->path()
         ];
     }
 }
