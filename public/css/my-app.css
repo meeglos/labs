@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron:400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Teko:600,700');
+@import url('https://fonts.googleapis.com/css?family=Pathway+Gothic+One');
+
 .btn-ml-5 {
     margin-left: 5px;
 }
@@ -7,3 +11,23 @@
 [v-cloak] {
     display: none;
 }
+.panel-heading-8-padding {
+    padding: 8px;
+    font-size: .9em;
+}
+.panel-footer-3-padding-top-bottom {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: .8em;
+}
+.panel-heading-number {
+    font-size: 3.5em;
+    font-weight: bold;
+    font-family: Arial, "Orbitron", Helvetica, sans-serif;
+}
+.call-name {
+    font-family: 'Pathway Gothic One', sans-serif;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+}
+

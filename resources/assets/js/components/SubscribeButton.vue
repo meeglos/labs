@@ -1,5 +1,8 @@
 <template>
-    <button :class="classes" @click="subscribe">Subscríbete</button>
+    <button :class="classes" @click="subscribe">
+        <small><span :class="classname"></span></small>
+        <span v-text="name"></span>
+    </button>
 </template>
 
 <script>
@@ -7,8 +10,16 @@
         props: ['active'],
 
         computed: {
+            name() {
+                return this.active ? 'Suscrito' : 'Suscríbete';
+            },
+
             classes() {
-                return ['btn', this.active ? 'btn-primary' : 'btn-default'];
+                return ['btn', this.active ? 'btn-danger' : 'btn-primary'];
+            },
+
+            classname() {
+                return ['glyphicon', this.active ? 'glyphicon-remove' : 'glyphicon-ok'];
             }
         },
 

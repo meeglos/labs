@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tp-admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fa-admin.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my-app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
